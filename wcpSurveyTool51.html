@@ -1,0 +1,1790 @@
+
+
+ 
+ 
+     <link rel="stylesheet" href="css/surveyTool.css">
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="wcpData.js"></script>
+	<script src ="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.2.0/math.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<style>
+
+	.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+	border: 1px solid #003eff;
+	background: #00467f;
+	font-weight: normal;
+	color: #ffffff;
+}
+.ui-icon-background,
+.ui-state-active .ui-icon-background {
+	border: #003eff;
+	background-color: #ffffff;
+}
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+	
+	.ui-checkboxradio-label .ui-icon-background {
+	box-shadow: inset 1px 1px 1px #ccc;
+	border-radius: .12em;
+	border: none;
+}
+.ui-checkboxradio-radio-label .ui-icon-background {
+	width: 8px;
+	height: 8px;
+	border-radius: 1em;
+	overflow: visible;
+	border: none;
+}
+.ui-checkboxradio-radio-label.ui-checkboxradio-checked .ui-icon,
+.ui-checkboxradio-radio-label.ui-checkboxradio-checked:hover .ui-icon {
+	background-image: none;
+	width: 4px;
+	height: 4px;
+	border-width: 2px;
+	border-style: solid;
+}
+.ui-checkboxradio-disabled {
+	pointer-events: none;
+}
+
+.ui-checkboxradio-radio-label{
+	font-size:0.8em;
+}
+
+.ui-button {
+	padding:0.2em 0.5em;
+}
+
+#islandRadio {
+	padding:0.2em;
+}
+
+
+#islandRadio .google-visualization-controls-label {
+	display:none !important;
+}
+
+.ui-accordion .ui-accordion-content {
+	padding:0.1em 0;
+	font-size:0.8em;
+	background-color: #F4FEFF;
+}
+
+.question {
+	width: 100%;
+    min-height: 5em;
+    background: #F4FEFF;
+    border: none;
+    padding:0.6em 0;
+	border-bottom:1px solid black;
+}
+
+.question:last-child {
+	border-bottom:none;
+}
+
+
+#dashMenuBox {
+	width:265px;
+}
+
+#questionText {
+	font-weight:normal;
+}
+
+.ui-accordion .ui-accordion-header {
+	font-size:14px;
+}
+
+.selectedQuestion {
+	background-color:#69C6F0
+}
+
+.filterDropdown {
+	width:87.5%;
+}
+
+#stateFilter {
+border: 1px solid #d3d3d3;
+    background: #e6e6e6 url(https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+    font-weight: normal;
+    color: black;
+	}
+
+#qStateHeader {
+	color: #00467f;
+}
+
+#qCategoryHeader {
+	font-weight:normal;
+	margin:0.1em;
+}
+
+#qTable {
+	position:relative;
+}
+
+.google-visualization-table-tr-head {
+	height:2.5em;
+}
+
+#qTableDownload{
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:10;
+}
+	
+</style>
+	
+    <script type="text/javascript">	
+	google.charts.load('current', {packages: ['table','controls','corechart']});
+	google.charts.setOnLoadCallback(drawVisualization);
+	
+	function drawVisualization() {
+	
+
+  
+  $( function() {
+    $( "#accordion" ).accordion({
+		heightStyle: "content",
+		collapsible:true
+	});
+  } );
+  
+		
+		let surveyYear = 2020;
+		
+		var colorScheme = ['#931A1D','#69C6F0','#78C479','#1F743A','#273A93','#ED1F24','#5496D0','#FEC15E','#CA92C1','#85D0CF','#E67C25','#526990'];
+		
+		var defaultChartOptions = {
+					hAxis:{
+						titleTextStyle: {
+							bold:true
+						}
+					},
+					vAxis:{
+						titleTextStyle: {
+							bold:true
+						}
+					},
+					colors: colorScheme,
+					'width':850,
+					'height':400
+			};
+			
+		let defaultHAxis = {
+			titleTextStyle: {
+					bold:true
+			},
+			minValue:0
+		}
+		
+		let defaultVAxis = {
+			titleTextStyle: {
+					bold:true
+			},
+			minValue:0
+		}
+		
+		let defaultTableWidth = "";
+		let defaultWidth = 850;
+		let defaultHeight = 500;
+			
+			var defaultTableOptions = {
+				'allowHtml':true,
+				'sort':'event'
+			}
+		
+		let defaultChartArea = {
+					left:100,
+					right:50,
+					bottom:50,
+					top:50
+				}
+		
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////// Commercial Economic Impacts Dashboard //////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+		var dash = new google.visualization.Dashboard(document.getElementById('dashboard'));	
+
+		
+		let q1dt = google.visualization.arrayToDataTable(q1Data,false);
+		let q2dt = google.visualization.arrayToDataTable(q2Data,false);
+		let q3dt = google.visualization.arrayToDataTable(q3Data,false);
+		let q4dt = google.visualization.arrayToDataTable(q4Data,false);
+		let q6dt = google.visualization.arrayToDataTable(q6Data,false);
+		let q7dt = google.visualization.arrayToDataTable(q7Data,false);
+		let q8dt = google.visualization.arrayToDataTable(q8Data,false);
+		let q9dt = google.visualization.arrayToDataTable(q9Data,false);
+		let q10dt = google.visualization.arrayToDataTable(q10Data,false);
+		let q11dt = google.visualization.arrayToDataTable(q11Data,false);
+		let q12dt = google.visualization.arrayToDataTable(q12Data,false);
+		let q13dt = google.visualization.arrayToDataTable(q13Data,false);
+		let q14_1dt = google.visualization.arrayToDataTable(q14_1Data,false);
+		let q14_2dt = google.visualization.arrayToDataTable(q14_2Data,false);
+		let q14_3dt = google.visualization.arrayToDataTable(q14_3Data,false);
+		let q15dt = google.visualization.arrayToDataTable(q15Data,false);
+		let q16dt = google.visualization.arrayToDataTable(q16Data,false);
+		let q17dt = google.visualization.arrayToDataTable(q17Data,false);
+		let q18dt = google.visualization.arrayToDataTable(q18Data,false);
+		let q19dt = google.visualization.arrayToDataTable(q19Data,false);
+		let q20dt = google.visualization.arrayToDataTable(q20Data,false);
+		let q21dt = google.visualization.arrayToDataTable(q21Data,false);
+		let q22dt = google.visualization.arrayToDataTable(q22Data,false);
+		let q23dt = google.visualization.arrayToDataTable(q23Data,false);
+		let q24dt = google.visualization.arrayToDataTable(q24Data,false);
+		let q25dt = google.visualization.arrayToDataTable(q25Data,false);
+		let q26dt = google.visualization.arrayToDataTable(q26Data,false);
+		let q27adt = google.visualization.arrayToDataTable(q27aData,false);
+		let q27bdt = google.visualization.arrayToDataTable(q27bData,false);
+		let q28dt = google.visualization.arrayToDataTable(q28Data,false);
+		let q29dt = google.visualization.arrayToDataTable(q29Data,false);
+		let q31dt = google.visualization.arrayToDataTable(q31Data,false);
+		let q32dt = google.visualization.arrayToDataTable(q32Data,false);
+		let q33dt = google.visualization.arrayToDataTable(q33Data,false);
+		let q34dt = google.visualization.arrayToDataTable(q34Data,false);
+		
+		var dashTable = new google.visualization.ChartWrapper({
+			'chartType': 'Table',
+			'containerId':'dashTable',
+			'options':{
+				'allowHtml':true,
+				'width':600,
+				'height':400,
+			},
+			
+		});
+		
+		var qTable = new google.visualization.ChartWrapper({
+			'chartType': 'Table',
+			'containerId':'qTable',
+			'options': {
+				'allowHtml':true,
+				'sort':'event',
+				'width':defaultTableWidth
+			}
+		});
+		
+		
+		var qChart = new google.visualization.ChartWrapper({
+			'chartType': 'ColumnChart',
+			'containerId':'qChart',
+			'options': {
+				hAxis:defaultHAxis,
+				vAxis:defaultVAxis,
+				colors: colorScheme,
+				width:defaultWidth,
+				height:defaultHeight,
+				chartArea:defaultChartArea
+			}
+		});
+		
+		
+		let drawTable,drawChart;
+	
+		
+		
+		var stateFilter = new google.visualization.ControlWrapper({
+			'controlType': 'CategoryFilter',
+			'containerId': 'stateFilter',
+			'options': {
+			  'filterColumnIndex': '0',
+			  ui:{allowMultiple: false, allowNone:false, sortValues:false}
+			}
+		});
+		
+		google.visualization.events.addListener(stateFilter,['ready','statechange'],function(){
+			let currentState = stateFilter.getState().selectedValues[0];
+			let headerText = "";
+			
+			if (currentState == "OR"){
+				headerText = "Oregon"
+			} else if(currentState == "WA"){
+				headerText = "Washington"
+			} else if (currentState == "CA"){
+				headerText = "California"
+			} else {
+				headerText = "All West Coast States"
+			}
+			
+			$("#qStateHeader").text(headerText);
+			
+			$(".goog-combobox input").css("width","18em");
+			$(".goog-combobox .goog-menu").css("width","92.5%");
+		})
+		
+		
+		
+		google.visualization.events.addListener(dashTable,'ready',function(){
+			var dt = dashTable.getDataTable();
+			drawTable(dt);
+			drawChart(dt);
+		})
+		
+		google.visualization.events.addListener(qChart,'ready',function(){
+			$("#qTable").prepend('<a href="#" id="qTableDownload" class="downloadCSV"><img src="buttons/download-button.png" title="Download Table"></a>')
+			$("#qTableDownload").click(q1TableDownloadFunction)
+		})
+
+		drawTable = drawq1Table;
+		drawChart = drawq1Chart;
+		
+		function drawq1Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq1Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Percentage of Vessel Owners by Age Group")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Age Group");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq2Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq2Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Years Involved in Fishing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Years Fishing");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq3Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq3Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Expected Years to Continue Fishing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Expected Years");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq4Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq4Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Frequency of Captaining Own Vessel")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Captain Own Vessel");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq6Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Family<br>Members");
+			formatTableWidth();
+		}
+		
+		function drawq6Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Number of Immediate Family Working in the Fishing Industry")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Number of Immediate Family Members");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq7Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Family<br>Members");
+			formatTableWidth();
+		}
+		
+		function drawq7Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Number of Extended Family in Fishing Industry")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Number of Extended Family Members");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq8Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq8Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Proportion of Acquaintances in Fishing Industry")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Proportion of Acquaintances");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq9Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq9Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Generations of Commercial Fishing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Generations");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq10Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq10Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Definition of Fishing Community")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Definition");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq11Table(dt){
+			let stateName = stateFilter.getState().selectedValues[0];
+		
+			let tabledt1 = new google.visualization.DataView(dt);
+			tabledt1.setColumns([1,2,3,4,5,6]);
+			qTable.setDataTable(tabledt1);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:nth-child(2)").html("Strongly<br>Disagree");
+			$("#qTable .google-visualization-table-th:nth-child(3)").html("Somewhat<br>Disagree");
+			$("#qTable .google-visualization-table-th:nth-child(5)").html("Somewhat<br>Agree");
+			$("#qTable .google-visualization-table-th:nth-child(6)").html("Strongly<br>Agree");
+			formatTableWidth();
+		}
+		
+		function drawq11Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,2,3,4,5,6]);
+			
+			qChart.setOption('chartArea',{left:190,right:130,bottom:50,top:50})
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Fishing Identity and Community Importance")
+			qChart.setOption('legend.position',"right");
+			qChart.setChartType('BarChart');
+			setDomainProperty(qChart,'title',"Statement");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq12Table(dt){
+			let stateName = stateFilter.getState().selectedValues[0];
+		
+			let tabledt1 = new google.visualization.DataView(dt);
+			tabledt1.setColumns([1,2,3,4,5,6]);
+			qTable.setDataTable(tabledt1);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:nth-child(2)").html("Very<br>Dissatisfied");
+			$("#qTable .google-visualization-table-th:nth-child(3)").html("Somewhat<br>Dissatisfied");
+			$("#qTable .google-visualization-table-th:nth-child(6)").html("Very<br>Satisfied");
+			formatTableWidth();
+		}
+		
+		function drawq12Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,2,3,4,5,6]);
+			
+			qChart.setOption('chartArea',{left:190,right:150,bottom:50,top:50})
+			qChart.setOption('height',700);
+			qChart.setOption('title',"Satisfaction with Fishing as a Job")
+			qChart.setOption('legend.position',"right");
+			qChart.setChartType('BarChart');
+			setDomainProperty(qChart,'title',"Job Characteristic");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq13Table(dt){
+			let stateName = stateFilter.getState().selectedValues[0];
+		
+			let tabledt1 = new google.visualization.DataView(dt);
+			tabledt1.setColumns([1,2,3,4]);
+			qTable.setDataTable(tabledt1);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:nth-child(2)").html("Not<br>Important");
+			$("#qTable .google-visualization-table-th:nth-child(3)").html("Somewhat<br>Important");
+			$("#qTable .google-visualization-table-th:nth-child(4)").html("Very<br>Important");
+			formatTableWidth();
+		}
+		
+		function drawq13Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,2,3,4]);
+			
+			qChart.setOption('chartArea',{left:190,right:130,bottom:50,top:50})
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Importance of Fishing Challenges")
+			qChart.setOption('legend.position',"right");
+			qChart.setChartType('BarChart');
+			setDomainProperty(qChart,'title',"Reason");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq14_1Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq14_1Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title','I Have Adapted My Fishing Strategies in Response to an Environmental Change')
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Agreement Level");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq14_2Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq14_2Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title','I Have Adequate Opportunity to Participate in Fisheries Management Processes')
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Agreement Level");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq14_3Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq14_3Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title','My Fishery Interests are Represented and Considered in Decision-Making')
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Agreement Level");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq15Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Affected By<br>Closures");
+			formatTableWidth();
+		}
+		
+		function drawq15Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Affected by Fishery Closures")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq16Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq16Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',{left:100,right:50,bottom:75,top:50})
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Response to Fishery Closures")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq17Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq17Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Preferred Work")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Employment Choice");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq18Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq18Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Percent Increase in Pay Required for Job Other Than Fishing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Percentage Increase in Pay");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq19Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Maximum<br>Crew");
+			formatTableWidth();
+		}
+		
+		function drawq19Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Maximum Number of Crew Employed")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Number of Crew");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq20Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq20Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title','I Can Find the Skilled Crew I Need to Run My Fishing Operation')
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Agreement Level");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq21Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq21Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title','Distance Willing to Travel to Catch Fish')
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Distance (Nautical Miles)");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq22Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Belong to Industry<br>Association");
+			formatTableWidth();
+		}
+		
+		function drawq22Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Belong to Industry Association or Organization")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq23Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Have Adequate<br>Fishing Season<br>Projection Information");
+			formatTableWidth();
+		}
+		
+		function drawq23Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Have Adequate Information about Fishing Season Projections")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq24Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq24Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Percentage of Time Spent Self-Marketing Catch")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Percent of Time");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq25Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Have Adequate<br>Access to Processors");
+			formatTableWidth();
+		}
+		
+		function drawq25Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Have Adequate Access to Processors or First Receivers")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq26Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq26Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Fished When Unprofitable to Provide Employment for Crew")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq27aTable(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Keep Some Catch<br>for Personal Use");
+			formatTableWidth();
+		}
+		
+		function drawq27aChart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Keep Catch for Personal Use of Sharing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Response");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq27bTable(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Pounds Kept for<br>Personal Use");
+			formatTableWidth();
+		}
+		
+		function drawq27bChart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Pounds Kept for Personal Use")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Pounds");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq28Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Percent Household Income<br>from Fishing");
+			formatTableWidth();
+		}
+		
+		function drawq28Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Percent of Household Income from Fishing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Percent of Income");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq29Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Percent of Personal Income<br>Not from Fishing");
+			formatTableWidth();
+		}
+		
+		function drawq29Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Percent of Personal Income NOT from Fishing")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Percent of Income");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq31Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq31Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Earned Non-Fishing Income")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Quarter");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq32Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq32Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',{left:190,right:50,bottom:50,top:50})
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Household Income")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('BarChart');
+			setDomainProperty(qChart,'title',"Income Range");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq33Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:first-child").html("Household<br>Members");
+			formatTableWidth();
+		}
+		
+		function drawq33Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',defaultChartArea);
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Size of Household")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('ColumnChart');
+			setDomainProperty(qChart,'title',"Household Members");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function drawq34Table(dt){
+		
+			let tabledt = new google.visualization.DataView(dt);
+			tabledt.setColumns([1,2,3]);
+			qTable.setDataTable(tabledt);
+			qTable.draw();
+			
+			formatTableWidth();
+		}
+		
+		function drawq34Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,3]);
+			
+			qChart.setOption('chartArea',{left:220,right:50,bottom:50,top:50})
+			qChart.setOption('height',defaultHeight);
+			qChart.setOption('title',"Source of Health Insurance")
+			qChart.setOption('legend.position',"none");
+			qChart.setChartType('BarChart');
+			setDomainProperty(qChart,'title',"Source");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
+		
+		function tallyCategories(dt,colIndex,catArray){
+			let valCount = [];
+			for (i=0;i<catArray.length;i++){
+				valCount.push(0);
+			}
+			
+			let rowCount = dt.getNumberOfRows();
+			let allValues = [];
+			
+			for (j=0;j<rowCount;j++){
+				let testValue = dt.getValue(j,colIndex);
+				allValues.push(testValue);
+				
+				for (k=0;k<catArray.length;k++){
+					if(testValue == catArray[k]){
+						valCount[k]++;
+					}
+				}
+			}
+			
+			return valCount;
+		}
+		
+		function categoryPercents(catArray,total){
+			let percentArray=[];
+			for (i=0;i<catArray.length;i++){
+				percentArray.push(Math.round((catArray[i]*100)/total));
+			}
+			return percentArray;
+		}
+		
+		$('#islandRadio input').on('change', function() {
+		   let islandVal = $('input[name=radio-1]:checked', '#islandRadio').val(); 
+		   if (islandVal == "Primary Target"){
+				$("#sellFilter").hide();
+				$("#islandFilter").hide();
+				$("#targetFilter").show();
+				islandFilter.setState({selectedValues: []})
+				sellFilter.setState({selectedValues: []})
+				islandFilter.draw();
+				sellFilter.draw();
+		   } else if (islandVal == "Sell Fish") {
+				$("#sellFilter").show();
+				$("#islandFilter").hide();
+				$("#targetFilter").hide();
+				
+				targetFilter.setState({selectedValues: []})
+				islandFilter.setState({selectedValues: []})
+				targetFilter.draw();
+				islandFilter.draw();
+		   } else {
+				$("#sellFilter").hide();
+				$("#islandFilter").show();
+				$("#targetFilter").hide();
+				targetFilter.setState({selectedValues: []})
+				sellFilter.setState({selectedValues: []})
+				targetFilter.draw();
+				sellFilter.draw();
+		   }
+		});
+		
+		
+		function formatTableWidth(){
+			let tableWidth = $("#qTable table").width();
+			let parentWidth = $("#qTables").width();
+			let lastColumn = $("#qTable .google-visualization-table-td:last-child")
+			
+			lastColumn.width(lastColumn.width()+parentWidth - tableWidth)
+		}
+		
+		function q1TableDownloadFunction(e){
+			let downloadId = e.currentTarget.id;
+			let dt = qTable.getDataTable();
+			let stateName = $("#qStateHeader").text().replace(/ /g,"_");
+			let questionGroup = $(".selectedQuestion").parent().prev().text().replace(/ /g,"_");
+			let questionNumber = $(".selectedQuestion").index()+1;
+			
+			
+			setDownloadTableLink(dt,downloadId,questionGroup+"_Question"+questionNumber+"_"+stateName+"_"+surveyYear)
+		}
+		
+		$("#qTableDownload").click(q1TableDownloadFunction)
+		
+		
+		function q1ChartDownloadFunction(e){
+			let downloadId = e.currentTarget.id;
+			let stateName = $("#qStateHeader").text().replace(/ /g,"_");
+			let questionGroup = $(".selectedQuestion").parent().prev().text().replace(/ /g,"_");
+			let questionNumber = $(".selectedQuestion").index()+1;
+			
+			setDownloadChartLink(qChart,downloadId,questionGroup+"_Question"+questionNumber+"_"+stateName+"_"+surveyYear);
+		}
+		
+		$("#qChartDownload").click(q1ChartDownloadFunction)
+		
+	
+		
+		$("#question1").click(function(){
+			dash.draw(q1dt);
+			drawTable = drawq1Table;
+			drawChart = drawq1Chart;
+		})
+		
+		$("#question2").click(function(){
+			drawTable = drawq2Table;
+			drawChart = drawq2Chart;
+			dash.draw(q2dt);
+		})
+		
+		$("#question3").click(function(){
+			dash.draw(q3dt);
+			drawTable = drawq3Table;
+			drawChart = drawq3Chart;
+		})
+		
+		$("#question4").click(function(){
+			dash.draw(q4dt);
+			drawTable = drawq4Table;
+			drawChart = drawq4Chart;
+		})
+		
+		$("#question6").click(function(){
+			dash.draw(q6dt);
+			drawTable = drawq6Table;
+			drawChart = drawq6Chart;
+		})
+		
+		$("#question7").click(function(){
+			dash.draw(q7dt);
+			drawTable = drawq7Table;
+			drawChart = drawq7Chart;
+		})
+		
+		$("#question8").click(function(){
+			dash.draw(q8dt);
+			drawTable = drawq8Table;
+			drawChart = drawq8Chart;
+		})
+		
+		$("#question9").click(function(){
+			dash.draw(q9dt);
+			drawTable = drawq9Table
+			drawChart = drawq9Chart;
+		})
+		
+		$("#question10").click(function(){
+			dash.draw(q10dt);
+			drawTable = drawq10Table
+			drawChart = drawq10Chart;
+		})
+		
+		$("#question11").click(function(){
+			dash.draw(q11dt);
+			drawTable = drawq11Table
+			drawChart = drawq11Chart;
+		})
+		
+		$("#question12").click(function(){
+			dash.draw(q12dt);
+			drawTable = drawq12Table
+			drawChart = drawq12Chart;
+		})
+		
+		$("#question13").click(function(){
+			dash.draw(q13dt);
+			drawTable = drawq13Table
+			drawChart = drawq13Chart;
+		})
+		
+		$("#question14_1").click(function(){
+			dash.draw(q14_1dt);
+			drawTable = drawq14_1Table
+			drawChart = drawq14_1Chart;
+		})
+		
+		$("#question14_2").click(function(){
+			dash.draw(q14_2dt);
+			drawTable = drawq14_2Table
+			drawChart = drawq14_2Chart;
+		})
+		
+		$("#question14_3").click(function(){
+			dash.draw(q14_3dt);
+			drawTable = drawq14_3Table
+			drawChart = drawq14_3Chart;
+		})
+		
+		$("#question15").click(function(){
+			dash.draw(q15dt);
+			drawTable = drawq15Table
+			drawChart = drawq15Chart;
+		})
+		
+		$("#question16").click(function(){
+			dash.draw(q16dt);
+			drawTable = drawq16Table
+			drawChart = drawq16Chart;
+		})
+		
+		$("#question17").click(function(){
+			dash.draw(q17dt);
+			drawTable = drawq17Table
+			drawChart = drawq17Chart;
+		})
+		
+		$("#question18").click(function(){
+			dash.draw(q18dt);
+			drawTable = drawq18Table
+			drawChart = drawq18Chart;
+		})
+		
+		$("#question19").click(function(){
+			dash.draw(q19dt);
+			drawTable = drawq19Table
+			drawChart = drawq19Chart;
+		})
+		
+		$("#question20").click(function(){
+			dash.draw(q20dt);
+			drawTable = drawq20Table
+			drawChart = drawq20Chart;
+		})
+		
+		$("#question21").click(function(){
+			dash.draw(q21dt);
+			drawTable = drawq21Table
+			drawChart = drawq21Chart;
+		})
+		
+		$("#question22").click(function(){
+			dash.draw(q22dt);
+			drawTable = drawq22Table
+			drawChart = drawq22Chart;
+		})
+		
+		$("#question23").click(function(){
+			dash.draw(q23dt);
+			drawTable = drawq23Table
+			drawChart = drawq23Chart;
+		})
+		
+		$("#question24").click(function(){
+			dash.draw(q24dt);
+			drawTable = drawq24Table
+			drawChart = drawq24Chart;
+		})
+		
+		$("#question25").click(function(){
+			dash.draw(q25dt);
+			drawTable = drawq25Table
+			drawChart = drawq25Chart;
+		})
+		
+		$("#question26").click(function(){
+			dash.draw(q26dt);
+			drawTable = drawq26Table
+			drawChart = drawq26Chart;
+		})
+		
+		$("#question27a").click(function(){
+			dash.draw(q27adt);
+			drawTable = drawq27aTable
+			drawChart = drawq27aChart;
+		})
+		
+		$("#question27b").click(function(){
+			dash.draw(q27bdt);
+			drawTable = drawq27bTable
+			drawChart = drawq27bChart;
+		})
+		
+		$("#question28").click(function(){
+			dash.draw(q28dt);
+			drawTable = drawq28Table
+			drawChart = drawq28Chart;
+		})
+		
+		$("#question29").click(function(){
+			dash.draw(q29dt);
+			drawTable = drawq29Table
+			drawChart = drawq29Chart;
+		})
+		
+		$("#question31").click(function(){
+			dash.draw(q31dt);
+			drawTable = drawq31Table
+			drawChart = drawq31Chart;
+		})
+		
+		$("#question32").click(function(){
+			dash.draw(q32dt);
+			drawTable = drawq32Table
+			drawChart = drawq32Chart;
+		})
+		
+		$("#question33").click(function(){
+			dash.draw(q33dt);
+			drawTable = drawq33Table
+			drawChart = drawq33Chart;
+		})
+		
+		$("#question34").click(function(){
+			dash.draw(q34dt);
+			drawTable = drawq34Table
+			drawChart = drawq34Chart;
+		})
+		
+		dash.bind(stateFilter,dashTable);
+		dash.draw(q1dt)
+		
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		
+		var setDomainProperty = function(chart,property,value){
+			var chartType = chart.getChartType();
+			if (chartType == "BarChart") {
+				chart.setOption('vAxis.' + property,value);
+			} 
+			if (chartType == "ColumnChart") {
+				chart.setOption('hAxis.' + property,value);
+			} 
+		}
+		
+		var setRangeProperty = function(chart,property,value){
+			var chartType = chart.getChartType();
+			if (chartType == "BarChart") {
+				chart.setOption('hAxis.' + property,value);
+			} 
+			if (chartType == "ColumnChart") {
+				chart.setOption('vAxis.' + property,value);
+			}
+		}
+		
+		function setDownloadTableLink(dt,linkId,downloadName){
+			let csv = dtToCsv(dt);		
+			$("#"+linkId).attr('href','data:text/csv;charset=utf8,' + encodeURIComponent(csv)).attr('download',downloadName+".csv");
+		}
+		
+		function setDownloadChartLink(chart,downloadId,downloadName){
+			let link = $('#'+downloadId);
+			link.attr('href',chart.getChart().getImageURI()).attr('download',downloadName+".png");
+		}
+		
+		
+			var dtToCsv = function(dt) {
+				var cols = dt.getNumberOfColumns();
+				var headerArray = [];
+				var headerRow;
+				var csv;
+				let questionTitle = $(".selectedQuestion").text();
+				let yearStateRow = surveyYear+" - "+$("#qStateHeader").text()+"\r\n";
+				let questionRow = '"'+questionTitle+'"'+"\r\n";
+				
+				for (i=0; i<cols; i++) {
+					headerArray.push(dt.getColumnLabel(i).replace(/,/g,""));
+				};
+				headerRow = headerArray.join(",")+"\r\n";
+				csv = yearStateRow.concat(questionRow,headerRow,google.visualization.dataTableToCsv(dt));
+				return csv;
+			}
+			
+		
+		
+
+		$("#dashboard").show();
+		
+		
+		$("#accordion h3").click(function(){
+		
+			//$("#questionGroupHeader").text($(this).text());
+			
+		})
+		
+		$(".question").click(function(){
+			$("#questionText").text("• "+$(this).text());
+			$(".selectedQuestion").removeClass("selectedQuestion");
+			$(this).addClass("selectedQuestion");
+			
+			let categoryName = $(".selectedQuestion").parent().prev().text();
+			$("#qCategoryHeader").text(categoryName);
+		})
+		
+		
+		$(".questionButtons").click(function(){
+			let questionButtonId = $(this).attr('id');
+			let questionNumber = questionButtonId.substring(0,questionButtonId.length - 6);
+			let currentClass = $("#qTable").attr('class');
+			$("#qTable").removeClass(currentClass).addClass(questionNumber);
+			
+			$(".selectedQuestionIcon").removeClass("selectedQuestionIcon").addClass("questionIcon");
+			$(this).find(".questionIcon").removeClass(".questionIcon").addClass("selectedQuestionIcon");
+			
+		//	$("#qTableHeader").text($(this).find(".questionButtonText").text());
+			$(".selectedQuestion").removeClass("selectedQuestion");
+			$(this).addClass("selectedQuestion");
+		})
+		
+		$("#question1").click();
+		
+		
+		
+	}
+		
+	  </script>
+
+
+
+<body>
+<input  type="hidden" id="someID">
+	<div id="dashboard" class="dashboards"> 
+	  <div id="q1Filters" class="filterBox"> 
+		<div id="stateFilter" class="filterDropdown"></div> 
+
+		<div id="dashMenuBox">
+				<div id="accordion">
+					 <h3>Age and Experience</h3>
+						  <div>
+							<button id="question1" class="question">What was your age in 2020?</button>
+							<button id="question2" class="question">How many years have you been involved in fishing as a paid crew member, captain and/or vessel owner?</button>
+							<button id="question3" class="question">How much longer do you expect to continue to fish or operate a vessel commercially?</button>
+						  </div>
+					<h3>Family and Social Connections to Fishing</h3>
+						  <div>
+						  <button id="question6" class="question">How many immediate family members also work in the fishing industry?</button>
+							<button id="question7" class="question">How many extended family members also work in the fishing industry?</button>
+							<button id="question8" class="question">Besides your family, what proportion of the people that you interact with regularly (e.g., friends, social acquaintances, colleagues, business associates, etc.)work in the fishing industry?</button>
+							<button id="question9" class="question">How many generations of commercial fishermen does your family represent?</button>
+						  </div>
+					<h3>Fishing Community and Fishing Identity</h3>
+						<div>
+							<button id="question10" class="question">How would you define the fishing community you feel most a part of?</button>
+							<button id="question11" class="question">Please indicate your level of agreement with the following statements about your fishing identity and community.</button>
+						</div>
+					<h3>Preference of Fishing as a Job</h3>
+						<div>
+							<button id="question17" class="question">Given the choice between fishing and an alternative job for which you are qualified, would you prefer fishing or the alternative job if the expected pay for both was the same?</button>
+							<button id="question18" class="question">How much more would another job have to pay for you to prefer it over fishing?</button>
+							<button id="question12" class="question">Please indicate your level of job satisfaction associated with each of these potential attributes of commercial fishing in terms of your own experience as a fisherman.</button>
+						</div>
+					<h3>Role as Captain</h3>
+						<div>
+							<button id="question4" class="question">Do you captain your own vessel?</button>
+							<button id="question19" class="question">If applicable, what is the maximum number of crew you employ on your fishing boat, not including the captain?</button>
+							<button id="question26" class="question">Have you ever continued fishing in order to provide employment for crew when you thought the profits earned by the vessel might fail to cover expenses?</button>
+						</div>
+					<h3>Challenges to Fishing</h3>
+						<div>
+							<button id="question13" class="question">How important are the following issues, challenges or impediments to making a living as a fisherman?</button>
+							<button id="question15" class="question">Has your fishing operation been affected by fishery closures in the last two years?</button>
+							<button id="question16" class="question">If you answered yes to the question above, how did you respond to the closure?</button>
+							<button id="question14_1" class="question">Please indicate your level of agreement with the statement: “I have adapted my fishing strategies in response to an environmental change.”</button>
+							<button id="question20" class="question">If applicable, indicate your level of agreement with the statement “I can find the skilled crew I need to run my fishing operation.”</button>
+							<button id="question21" class="question">How far are you willing to travel to catch fish (nautical miles)?</button>
+							<button id="question23" class="question">Do you have adequate information about fishing season projections to make decisions about your annual operations?</button>
+							<button id="question25" class="question">Do you have adequate access to processors or first receivers in order to sell your catch?</button>
+						</div>
+					<h3>Catch Kept for Personal Use</h3>
+						<div>
+							<button id="question27a" class="question">Do you keep some of your commercial catch for your own use and/or sharing with family and friends?</button>
+							<button id="question27b" class="question">Roughly how many pounds of catch do you keep each year for personal use?</button>
+						</div>
+					<h3>Household Characteristics</h3>
+						<div>
+							<button id="question33" class="question">How many people are in your household?</button>
+							<button id="question32" class="question">What was your approximate household income in 2019?</button>
+							<button id="question34" class="question">Do you have health insurance and, if so, how is it acquired?</button>
+						</div>
+					<h3>Income from Fishing</h3>
+						<div>
+							<button id="question28" class="question">In 2019, what percentage of your household income came from commercial fishing?</button>
+							<button id="question29" class="question">In 2019, what percentage of the income you personally contributed to your household was from work other than commercial fishing?</button>
+							<button id="question31" class="question">In 2019, did you personally earn non-fishing income during this quarter?</button>
+							<button id="question24" class="question">What percentage of time do you spend in self-marketing your catch?</button>
+						</div>
+					<h3>Representation in Management</h3>
+						<div>
+							<button id="question22" class="question">Do you belong to an industry association or organization that represents your interest in management decision-making?</button>	
+							<button id="question14_2" class="question">Please indicate your level of agreement with the statement: “I have adequate opportunity to participate in fisheries management processes.”</button>
+							<button id="question14_3" class="question">Please indicate your level of agreement with the statement: “My fishery interests are represented and considered in decision-making.”</button>							
+						</div>
+				</div>
+			</div>
+	  </div> 
+	  <div id="q1Visual" class="surveyVisual">
+				<h1 id="questionGroupHeader"></h1>
+				<h1 id="qStateHeader"></h1>
+				<h2 id="qCategoryHeader"></h2>
+				<h3 id="questionText"></h3>
+		   <div id="qTables"> 
+			<div  id="dashTable" style="display:none;"></div> 
+			<div id="qTableBox" class="tableBox">
+			
+				<div id="qTable"></div> 
+				<h5 id="qTableFooter" class="tableFooter"></h5>
+			</div>
+		   </div> 
+		   <div id="qChartBox" class="surveyChartBox"> 
+				<a href="#" id="qChartDownload" class="downloadPNG"><img src="buttons/download-button.png" title="Download Chart"></a>
+				<div id="qChart" class="chartWrappers"></div> 
+				
+		   </div> 
+	  </div>
+  </div> 
+ 
+</body>
+
+
