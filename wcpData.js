@@ -249,25 +249,28 @@ let q9Data = [
 ['WA', '>5', 6, 1.97]
 ]
 
+// Q11 in 2023 survey
 let q10Data = [
 ['State','Definition of Fishing Community','Count','Percent'],
-	[`All`,`As a place`,229,15.86],
-[`All`,`As a collection of people`,239,16.55],
-[`All`,`Both place and people`,906,62.74],
-[`All`,`I'm not part of the fishing community`,70,4.85],
-[`OR`,`As a place`,61,19.81],
-[`OR`,`As a collection of people`,43,13.96],
-[`OR`,`Both place and people`,199,64.61],
-[`OR`,`I'm not part of the fishing community`,5,1.62],
-[`WA`,`As a place`,58,16.71],
-[`WA`,`As a collection of people`,59,17],
-[`WA`,`Both place and people`,214,61.67],
-[`WA`,`I'm not part of the fishing community`,16,4.61],
-[`CA`,`As a place`,107,14.15],
-[`CA`,`As a collection of people`,132,17.46],
-[`CA`,`Both place and people`,470,62.17],
-[`CA`,`I'm not part of the fishing community`,47,6.22]
+['All', 'As a collection of people', 166, 14.2],
+['All', 'As a place', 191, 16.34],
+['All', 'Both place and people', 760, 65.01],
+['All', `I'm not part of the fishing community`, 52, 4.45],
+['CA', 'As a collection of people', 108, 16.98],
+['CA', 'As a place', 86, 13.52],
+['CA', 'Both place and people', 411, 64.62],
+['CA', `I'm not part of the fishing community`, 31, 4.87],
+['OR', 'As a collection of people', 17, 7.36],
+['OR', 'As a place', 54, 23.38],
+['OR', 'Both place and people', 154, 66.67],
+['OR', `I'm not part of the fishing community`, 6, 2.6],
+['WA', 'As a collection of people', 41, 13.58],
+['WA', 'As a place', 51, 16.89],
+['WA', 'Both place and people', 195, 64.57],
+['WA', `I'm not part of the fishing community`, 15, 4.97]
 ]
+
+
 
 let q11Data = [
 ['State','Statement','Strongly Disagree','Somewhat Disagree','Neutral','Somewhat Agree','Strongly Agree'],
