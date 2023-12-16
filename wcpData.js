@@ -86,24 +86,25 @@ let q3Data = [
 
 let q4Data = [
 ['State','Captain Own Vessel','Count','Percent'],
-	['All','Always',1075,74.34],
-['All','Mostly',225,15.56],
-['All','Sometimes',101,6.98],
-['All','Never',45,3.11],
-['OR','Always',208,67.97],
-['OR','Mostly',46,15.03],
-['OR','Sometimes',39,12.75],
-['OR','Never',13,4.25],
-['WA','Always',243,70.03],
-['WA','Mostly',60,17.29],
-['WA','Sometimes',27,7.78],
-['WA','Never',17,4.9],
-['CA','Always',600,78.84],
-['CA','Mostly',115,15.11],
-['CA','Sometimes',33,4.34],
-['CA','Never',13,1.71]
+['All', 'Always', 886, 75.08],
+['All', 'Mostly', 193, 16.36],
+['All', 'Never', 35, 2.97],
+['All', 'Sometimes', 66, 5.59],
+['CA', 'Always', 495, 41.95],
+['CA', 'Mostly', 103, 8.73],
+['CA', 'Never', 13, 1.1],
+['CA', 'Sometimes', 31, 2.63],
+['OR', 'Always', 164, 13.9],
+['OR', 'Mostly', 34, 2.88],
+['OR', 'Never', 14, 1.19],
+['OR', 'Sometimes', 21, 1.78],
+['WA', 'Always', 227, 19.24],
+['WA', 'Mostly', 56, 4.75],
+['WA', 'Never', 8, 0.68],
+['WA', 'Sometimes', 14, 1.19]
 ]
 
+// This is Q7 on the 2023 survey
 let q6Data = [
 ['State','Family Members','Count','Percent'],
 	['All','0',666,46.25],
