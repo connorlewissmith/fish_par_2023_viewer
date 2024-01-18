@@ -245,11 +245,6 @@ border: 1px solid #d3d3d3;
 		let q18dt = google.visualization.arrayToDataTable(q18Data,false);
 		let q19dt = google.visualization.arrayToDataTable(q19Data,false);
 		let q20dt = google.visualization.arrayToDataTable(q20Data,false);
-		let q21dt = google.visualization.arrayToDataTable(q21Data,false);
-		let q22dt = google.visualization.arrayToDataTable(q22Data,false);
-		let q23dt = google.visualization.arrayToDataTable(q23Data,false);
-		let q24dt = google.visualization.arrayToDataTable(q24Data,false);
-		let q25dt = google.visualization.arrayToDataTable(q25Data,false);
 		let q26dt = google.visualization.arrayToDataTable(q26Data,false);
 		let q27adt = google.visualization.arrayToDataTable(q27aData,false);
 		let q27bdt = google.visualization.arrayToDataTable(q27bData,false);
@@ -265,6 +260,19 @@ border: 1px solid #d3d3d3;
 		let q38dt = google.visualization.arrayToDataTable(q38Data,false);
 		let q39dt = google.visualization.arrayToDataTable(q39Data,false);
 		let q40dt = google.visualization.arrayToDataTable(q40Data,false);
+		let q41dt = google.visualization.arrayToDataTable(q41Data,false);
+		let q42dt = google.visualization.arrayToDataTable(q42Data,false);
+		let q43dt = google.visualization.arrayToDataTable(q43Data,false);
+		let q44dt = google.visualization.arrayToDataTable(q44Data,false);
+		let q45dt = google.visualization.arrayToDataTable(q45Data,false);
+		let q46dt = google.visualization.arrayToDataTable(q46Data,false);
+		let q47dt = google.visualization.arrayToDataTable(q47Data,false);
+		let q48dt = google.visualization.arrayToDataTable(q48Data,false);
+		let q49dt = google.visualization.arrayToDataTable(q49Data,false);
+		let q50dt = google.visualization.arrayToDataTable(q50Data,false);
+		let q51dt = google.visualization.arrayToDataTable(q51Data,false);
+		let q52dt = google.visualization.arrayToDataTable(q52Data,false);
+
 		
 		var dashTable = new google.visualization.ChartWrapper({
 			'chartType': 'Table',
@@ -884,139 +892,6 @@ border: 1px solid #d3d3d3;
 			qChart.draw();
 		}
 		
-		function drawq21Table(dt){
-		
-			let tabledt = new google.visualization.DataView(dt);
-			tabledt.setColumns([1,2,3]);
-			qTable.setDataTable(tabledt);
-			qTable.draw();
-			
-			formatTableWidth();
-		}
-		
-		function drawq21Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,3]);
-			
-			qChart.setOption('chartArea',defaultChartArea);
-			qChart.setOption('height',defaultHeight);
-			qChart.setOption('title','Distance Willing to Travel to Catch Fish')
-			qChart.setOption('legend.position',"none");
-			qChart.setChartType('ColumnChart');
-			setDomainProperty(qChart,'title',"Distance (Nautical Miles)");
-			setRangeProperty(qChart,'title',"Percent of Responses");
-		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
-		
-		function drawq22Table(dt){
-		
-			let tabledt = new google.visualization.DataView(dt);
-			tabledt.setColumns([1,2,3]);
-			qTable.setDataTable(tabledt);
-			qTable.draw();
-			
-			$("#qTable .google-visualization-table-th:first-child").html("Belong to Industry<br>Association");
-			formatTableWidth();
-		}
-		
-		function drawq22Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,3]);
-			
-			qChart.setOption('chartArea',defaultChartArea);
-			qChart.setOption('height',defaultHeight);
-			qChart.setOption('title',"Belong to Industry Association or Organization")
-			qChart.setOption('legend.position',"none");
-			qChart.setChartType('ColumnChart');
-			setDomainProperty(qChart,'title',"Response");
-			setRangeProperty(qChart,'title',"Percent of Responses");
-		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
-		
-		function drawq23Table(dt){
-		
-			let tabledt = new google.visualization.DataView(dt);
-			tabledt.setColumns([1,2,3]);
-			qTable.setDataTable(tabledt);
-			qTable.draw();
-			
-			$("#qTable .google-visualization-table-th:first-child").html("Have Adequate<br>Fishing Season<br>Projection Information");
-			formatTableWidth();
-		}
-		
-		function drawq23Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,3]);
-			
-			qChart.setOption('chartArea',defaultChartArea);
-			qChart.setOption('height',defaultHeight);
-			qChart.setOption('title',"Have Adequate Information about Fishing Season Projections")
-			qChart.setOption('legend.position',"none");
-			qChart.setChartType('ColumnChart');
-			setDomainProperty(qChart,'title',"Response");
-			setRangeProperty(qChart,'title',"Percent of Responses");
-		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
-		
-		function drawq24Table(dt){
-		
-			let tabledt = new google.visualization.DataView(dt);
-			tabledt.setColumns([1,2,3]);
-			qTable.setDataTable(tabledt);
-			qTable.draw();
-			
-			formatTableWidth();
-		}
-		
-		function drawq24Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,3]);
-			
-			qChart.setOption('chartArea',defaultChartArea);
-			qChart.setOption('height',defaultHeight);
-			qChart.setOption('title',"Percentage of Time Spent Self-Marketing Catch")
-			qChart.setOption('legend.position',"none");
-			qChart.setChartType('ColumnChart');
-			setDomainProperty(qChart,'title',"Percent of Time");
-			setRangeProperty(qChart,'title',"Percent of Responses");
-		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
-		
-		function drawq25Table(dt){
-		
-			let tabledt = new google.visualization.DataView(dt);
-			tabledt.setColumns([1,2,3]);
-			qTable.setDataTable(tabledt);
-			qTable.draw();
-			
-			$("#qTable .google-visualization-table-th:first-child").html("Have Adequate<br>Access to Processors");
-			formatTableWidth();
-		}
-		
-		function drawq25Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,3]);
-			
-			qChart.setOption('chartArea',defaultChartArea);
-			qChart.setOption('height',defaultHeight);
-			qChart.setOption('title',"Have Adequate Access to Processors or First Receivers")
-			qChart.setOption('legend.position',"none");
-			qChart.setChartType('ColumnChart');
-			setDomainProperty(qChart,'title',"Response");
-			setRangeProperty(qChart,'title',"Percent of Responses");
-		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
-		
 		function drawq26Table(dt){
 		
 			let tabledt = new google.visualization.DataView(dt);
@@ -1391,34 +1266,296 @@ border: 1px solid #d3d3d3;
 	}
 
 	function drawq40Table(dt){
-			let stateName = stateFilter.getState().selectedValues[0];
+		let stateName = stateFilter.getState().selectedValues[0];
 		
-			let tabledt1 = new google.visualization.DataView(dt);
-			tabledt1.setColumns([1,2,3,4,5,6]);
-			qTable.setDataTable(tabledt1);
-			qTable.draw();
+		let tabledt1 = new google.visualization.DataView(dt);
+		tabledt1.setColumns([1,2,3,4,5,6]);
+		qTable.setDataTable(tabledt1);
+		qTable.draw();
 			
-			$("#qTable .google-visualization-table-th:nth-child(2)").html("Very<br>Unlikely");
-			$("#qTable .google-visualization-table-th:nth-child(3)").html("Neutral");
-			$("#qTable .google-visualization-table-th:nth-child(6)").html("Very<br>Likely");
-			formatTableWidth();
-		}
+		$("#qTable .google-visualization-table-th:nth-child(2)").html("Very<br>Unlikely");
+		$("#qTable .google-visualization-table-th:nth-child(3)").html("Neutral");
+		$("#qTable .google-visualization-table-th:nth-child(6)").html("Very<br>Likely");
+		formatTableWidth();
+	}
 		
-		function drawq40Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,2,3,4,5,6]);
+	function drawq40Chart(dt){
+		let chartdt = new google.visualization.DataView(dt);
+		chartdt.setColumns([1,2,3,4,5,6]);
 			
-			qChart.setOption('chartArea',{left:190,right:150,bottom:50,top:50})
-			qChart.setOption('height',700);
-			qChart.setOption('title',"Likelihood of increasing direct marketing with following changes ")
-			qChart.setOption('legend.position',"right");
-			qChart.setChartType('BarChart');
-			setDomainProperty(qChart,'title',"");
-			setRangeProperty(qChart,'title',"Percent of Responses");
+		qChart.setOption('chartArea',{left:190,right:150,bottom:50,top:50})
+		qChart.setOption('height',700);
+		qChart.setOption('title',"Likelihood of increasing direct marketing with following changes ")
+		qChart.setOption('legend.position',"right");
+		qChart.setChartType('BarChart');
+		setDomainProperty(qChart,'title',"");
+		setRangeProperty(qChart,'title',"Percent of Responses");
 		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
+		qChart.setDataTable(chartdt);
+		qChart.draw();
+	}
+
+	function drawq41Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq41Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vehicle for Ice/Bait");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq42Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq42Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vehicle for Gear");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq43Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq43Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vehicle for Fuel");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq44Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq44Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vehicle for Buyers");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+	function drawq45Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq45Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vehicle for Boatyard");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq46Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq46Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vehicle for Refridgeration/Warehouse");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq47Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq47Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vessel for Ice/Bait");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq48Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq48Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vessel for Gear");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq49Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq49Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vessel for Fuel");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq50Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq50Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vessel for Buyers");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+	function drawq51Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq51Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vessel for Boatyard");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
+
+	function drawq52Table(dt){
+    	let tabledt = new google.visualization.DataView(dt);
+    	tabledt.setColumns([1,2,3]);
+    	qTable.setDataTable(tabledt);
+    	qTable.draw();
+    	formatTableWidth();
+	}
+
+	function drawq52Chart(dt){
+   		let chartdt = new google.visualization.DataView(dt);
+    	chartdt.setColumns([1,3]);
+    	qChart.setOption('chartArea', defaultChartArea);
+    	qChart.setOption('height', defaultHeight);
+    	qChart.setOption('title', "Distance Traveled by Vessel for Refridgeration/Warehouse");
+    	qChart.setOption('legend.position', "none");
+    	qChart.setChartType('ColumnChart');
+    	setDomainProperty(qChart, 'title', "Distance");
+    	setRangeProperty(qChart, 'title', "Percent of Responses");
+    	qChart.setDataTable(chartdt);
+    	qChart.draw();
+	}
 		
 		function tallyCategories(dt,colIndex,catArray){
 			let valCount = [];
@@ -1636,37 +1773,7 @@ border: 1px solid #d3d3d3;
 			drawTable = drawq20Table
 			drawChart = drawq20Chart;
 		})
-		
-		$("#question21").click(function(){
-			dash.draw(q21dt);
-			drawTable = drawq21Table
-			drawChart = drawq21Chart;
-		})
-		
-		$("#question22").click(function(){
-			dash.draw(q22dt);
-			drawTable = drawq22Table
-			drawChart = drawq22Chart;
-		})
-		
-		$("#question23").click(function(){
-			dash.draw(q23dt);
-			drawTable = drawq23Table
-			drawChart = drawq23Chart;
-		})
-		
-		$("#question24").click(function(){
-			dash.draw(q24dt);
-			drawTable = drawq24Table
-			drawChart = drawq24Chart;
-		})
-		
-		$("#question25").click(function(){
-			dash.draw(q25dt);
-			drawTable = drawq25Table
-			drawChart = drawq25Chart;
-		})
-		
+
 		$("#question26").click(function(){
 			dash.draw(q26dt);
 			drawTable = drawq26Table
@@ -1756,6 +1863,82 @@ border: 1px solid #d3d3d3;
 			drawTable = drawq40Table
 			drawChart = drawq40Chart;
 		})
+
+		$("#question41").click(function(){
+    dash.draw(q41dt);
+    drawTable = drawq41Table;
+    drawChart = drawq41Chart;
+});
+
+$("#question42").click(function(){
+    dash.draw(q42dt);
+    drawTable = drawq42Table;
+    drawChart = drawq42Chart;
+});
+
+$("#question43").click(function(){
+    dash.draw(q43dt);
+    drawTable = drawq43Table;
+    drawChart = drawq43Chart;
+});
+
+$("#question44").click(function(){
+    dash.draw(q44dt);
+    drawTable = drawq44Table;
+    drawChart = drawq44Chart;
+});
+
+$("#question45").click(function(){
+    dash.draw(q45dt);
+    drawTable = drawq45Table;
+    drawChart = drawq45Chart;
+});
+
+$("#question46").click(function(){
+    dash.draw(q46dt);
+    drawTable = drawq46Table;
+    drawChart = drawq46Chart;
+});
+
+$("#question47").click(function(){
+    dash.draw(q47dt);
+    drawTable = drawq47Table;
+    drawChart = drawq47Chart;
+});
+
+$("#question48").click(function(){
+    dash.draw(q48dt);
+    drawTable = drawq48Table;
+    drawChart = drawq48Chart;
+});
+
+$("#question49").click(function(){
+    dash.draw(q49dt);
+    drawTable = drawq49Table;
+    drawChart = drawq49Chart;
+});
+
+$("#question50").click(function(){
+    dash.draw(q50dt);
+    drawTable = drawq50Table;
+    drawChart = drawq50Chart;
+});
+
+$("#question51").click(function(){
+    dash.draw(q51dt);
+    drawTable = drawq51Table;
+    drawChart = drawq51Chart;
+});
+
+$("#question52").click(function(){
+    dash.draw(q52dt);
+    drawTable = drawq52Table;
+    drawChart = drawq52Chart;
+});
+
+
+
+
 
 		
 		
@@ -1904,9 +2087,6 @@ border: 1px solid #d3d3d3;
 							<button id="question16" class="question">If you answered yes to the question above, how did you respond to the closure?</button>
 							<button id="question14_1" class="question">Please indicate your level of agreement with the statement: “I have adapted my fishing strategies in response to an environmental change.”</button>
 							<button id="question20" class="question">If applicable, indicate your level of agreement with the statement “I can find the skilled crew I need to run my fishing operation.”</button>
-							<button id="question21" class="question">How far are you willing to travel to catch fish (nautical miles)?</button>
-							<button id="question23" class="question">Do you have adequate information about fishing season projections to make decisions about your annual operations?</button>
-							<button id="question25" class="question">Do you have adequate access to processors or first receivers in order to sell your catch?</button>
 						</div>
 					<h3>Catch Kept for Personal Use</h3>
 						<div>
@@ -1921,6 +2101,21 @@ border: 1px solid #d3d3d3;
 							<button id="question39" class="question">The percent increase in the price you receive from selling your catch through direct marketing channels compared to selling to the local processing plant is?</button>	
 							<button id="question40" class="question">How likely are you to increasing Direct Marketing with the following changes?</button>	
 						</div>
+					<h3>Travel Distance for Services/Supplies</h3>
+						<div>
+							<button id="question41" class="question">Please estimate the distance you travel from your homeport to obtain Ice/Bait by vehicle</button>
+							<button id="question42" class="question">Please estimate the distance you travel from your homeport to obtain Ice/Bait by vessel</button>
+							<button id="question43" class="question">Please estimate the distance you travel from your homeport to obtain Gear (Nets/Pots/Traps/Lines) by vehicle</button>
+							<button id="question44" class="question">Please estimate the distance you travel from your homeport to obtain Gear (Nets/Pots/Traps/Lines) by vessel</button>
+							<button id="question45" class="question">Please estimate the distance you travel from your homeport to obtain Fuel by vehicle</button>
+							<button id="question46" class="question">Please estimate the distance you travel from your homeport to obtain Fuel by vessel</button>
+							<button id="question47" class="question">Please estimate the distance you travel from your homeport to obtain Processors/Buyers by vehicle</button>
+							<button id="question48" class="question">Please estimate the distance you travel from your homeport to obtain Processors/Buyers by vessel</button>
+							<button id="question49" class="question">Please estimate the distance you travel from your homeport to obtain Dry Dock/Boatyard by vehicle</button>
+							<button id="question50" class="question">Please estimate the distance you travel from your homeport to obtain Dry Dock/Boatyard by vessel</button>
+							<button id="question51" class="question">Please estimate the distance you travel from your homeport to obtain Refridgeration/Warehouse Facilities by vehicle</button>
+							<button id="question52" class="question">Please estimate the distance you travel from your homeport to obtain Refridgeration/Warehouse Facilities by vessel</button>
+			            </div>
 					<h3>Household Characteristics</h3>
 						<div>
 							<button id="question33" class="question">How many people are in your household?</button>
@@ -1932,11 +2127,9 @@ border: 1px solid #d3d3d3;
 							<button id="question28" class="question">In 2022, what percentage of your household income came from commercial fishing?</button>
 							<button id="question29" class="question">In 2022, what percentage of the income you personally contributed to your household was from work other than commercial fishing?</button>
 							<button id="question31" class="question">In 2022, did you personally earn non-fishing income during this quarter?</button>
-							<button id="question24" class="question">What percentage of time do you spend in self-marketing your catch?</button>
 						</div>
 					<h3>Representation in Management</h3>
 						<div>
-							<button id="question22" class="question">Do you belong to an industry association or organization that represents your interest in management decision-making?</button>	
 							<button id="question14_2" class="question">Please indicate your level of agreement with the statement: “I have adequate opportunity to participate in fisheries management processes.”</button>
 							<button id="question14_3" class="question">Please indicate your level of agreement with the statement: “My fishery interests are represented and considered in decision-making.”</button>							
 						</div>
