@@ -236,7 +236,6 @@ border: 1px solid #d3d3d3;
 		let q10dt = google.visualization.arrayToDataTable(q10Data,false);
 		let q11dt = google.visualization.arrayToDataTable(q11Data,false);
 		let q12dt = google.visualization.arrayToDataTable(q12Data,false);
-		let q13dt = google.visualization.arrayToDataTable(q13Data,false);
 		let q14_1dt = google.visualization.arrayToDataTable(q14_1Data,false);
 		let q14_2dt = google.visualization.arrayToDataTable(q14_2Data,false);
 		let q14_3dt = google.visualization.arrayToDataTable(q14_3Data,false);
@@ -260,6 +259,12 @@ border: 1px solid #d3d3d3;
 		let q32dt = google.visualization.arrayToDataTable(q32Data,false);
 		let q33dt = google.visualization.arrayToDataTable(q33Data,false);
 		let q34dt = google.visualization.arrayToDataTable(q34Data,false);
+		let q35dt = google.visualization.arrayToDataTable(q35Data,false);
+		let q36dt = google.visualization.arrayToDataTable(q36Data,false);
+		let q37dt = google.visualization.arrayToDataTable(q37Data,false);
+		let q38dt = google.visualization.arrayToDataTable(q38Data,false);
+		let q39dt = google.visualization.arrayToDataTable(q39Data,false);
+		let q40dt = google.visualization.arrayToDataTable(q40Data,false);
 		
 		var dashTable = new google.visualization.ChartWrapper({
 			'chartType': 'Table',
@@ -637,36 +642,6 @@ border: 1px solid #d3d3d3;
 			qChart.setOption('legend.position',"right");
 			qChart.setChartType('BarChart');
 			setDomainProperty(qChart,'title',"Job Characteristic");
-			setRangeProperty(qChart,'title',"Percent of Responses");
-		
-			qChart.setDataTable(chartdt);
-			qChart.draw();
-		}
-		
-		function drawq13Table(dt){
-			let stateName = stateFilter.getState().selectedValues[0];
-		
-			let tabledt1 = new google.visualization.DataView(dt);
-			tabledt1.setColumns([1,2,3,4]);
-			qTable.setDataTable(tabledt1);
-			qTable.draw();
-			
-			$("#qTable .google-visualization-table-th:nth-child(2)").html("Not<br>Important");
-			$("#qTable .google-visualization-table-th:nth-child(3)").html("Somewhat<br>Important");
-			$("#qTable .google-visualization-table-th:nth-child(4)").html("Very<br>Important");
-			formatTableWidth();
-		}
-		
-		function drawq13Chart(dt){
-			let chartdt = new google.visualization.DataView(dt);
-			chartdt.setColumns([1,2,3,4]);
-			
-			qChart.setOption('chartArea',{left:190,right:130,bottom:50,top:50})
-			qChart.setOption('height',defaultHeight);
-			qChart.setOption('title',"Importance of Fishing Challenges")
-			qChart.setOption('legend.position',"right");
-			qChart.setChartType('BarChart');
-			setDomainProperty(qChart,'title',"Reason");
 			setRangeProperty(qChart,'title',"Percent of Responses");
 		
 			qChart.setDataTable(chartdt);
@@ -1280,6 +1255,170 @@ border: 1px solid #d3d3d3;
 			qChart.setDataTable(chartdt);
 			qChart.draw();
 		}
+
+		function drawq35Table(dt){
+		
+		let tabledt = new google.visualization.DataView(dt);
+		tabledt.setColumns([1,2,3]);
+		qTable.setDataTable(tabledt);
+		qTable.draw();
+		
+		formatTableWidth();
+	}
+	
+	function drawq35Chart(dt){
+		let chartdt = new google.visualization.DataView(dt);
+		chartdt.setColumns([1,3]);
+		
+		qChart.setOption('chartArea',{left:220,right:50,bottom:50,top:50})
+		qChart.setOption('height',defaultHeight);
+		qChart.setOption('title',"Source of Health Insurance")
+		qChart.setOption('legend.position',"none");
+		qChart.setChartType('BarChart');
+		setDomainProperty(qChart,'title',"Source");
+		setRangeProperty(qChart,'title',"Percent of Responses");
+	
+		qChart.setDataTable(chartdt);
+		qChart.draw();
+	}
+
+	function drawq36Table(dt){
+		
+		let tabledt = new google.visualization.DataView(dt);
+		tabledt.setColumns([1,2,3]);
+		qTable.setDataTable(tabledt);
+		qTable.draw();
+		
+		$("#qTable .google-visualization-table-th:first-child").html("Do you ever <br>self-market catch");
+		formatTableWidth();
+	}
+	
+	function drawq36Chart(dt){
+		let chartdt = new google.visualization.DataView(dt);
+		chartdt.setColumns([1,3]);
+		
+		qChart.setOption('chartArea',defaultChartArea);
+		qChart.setOption('height',defaultHeight);
+		qChart.setOption('title',"Self Marketing")
+		qChart.setOption('legend.position',"none");
+		qChart.setChartType('ColumnChart');
+		setDomainProperty(qChart,'title',"Response");
+		setRangeProperty(qChart,'title',"Percent of Responses");
+	
+		qChart.setDataTable(chartdt);
+		qChart.draw();
+	}
+
+	function drawq37Table(dt){
+		
+		let tabledt = new google.visualization.DataView(dt);
+		tabledt.setColumns([1,2,3]);
+		qTable.setDataTable(tabledt);
+		qTable.draw();
+		
+		$("#qTable .google-visualization-table-th:first-child").html("Work time<br>Spent Self-Marketing");
+		formatTableWidth();
+	}
+	
+	function drawq37Chart(dt){
+		let chartdt = new google.visualization.DataView(dt);
+		chartdt.setColumns([1,3]);
+		
+		qChart.setOption('chartArea',defaultChartArea);
+		qChart.setOption('height',defaultHeight);
+		qChart.setOption('title',"Percent of Work Time Spent Self-Marketing")
+		qChart.setOption('legend.position',"none");
+		qChart.setChartType('ColumnChart');
+		setDomainProperty(qChart,'title',"Response");
+		setRangeProperty(qChart,'title',"Percent of Responses");
+	
+		qChart.setDataTable(chartdt);
+		qChart.draw();
+	}
+
+	function drawq38Table(dt){
+		
+		let tabledt = new google.visualization.DataView(dt);
+		tabledt.setColumns([1,2,3]);
+		qTable.setDataTable(tabledt);
+		qTable.draw();
+		
+		$("#qTable .google-visualization-table-th:first-child").html("Total Revenue <br>Percent from Self-Marketing");
+		formatTableWidth();
+	}
+	
+	function drawq38Chart(dt){
+		let chartdt = new google.visualization.DataView(dt);
+		chartdt.setColumns([1,3]);
+		
+		qChart.setOption('chartArea',defaultChartArea);
+		qChart.setOption('height',defaultHeight);
+		qChart.setOption('title',"Percent of Total Revenue from Self-Marketing")
+		qChart.setOption('legend.position',"none");
+		qChart.setChartType('ColumnChart');
+		setDomainProperty(qChart,'title',"Response");
+		setRangeProperty(qChart,'title',"Percent of Responses");
+	
+		qChart.setDataTable(chartdt);
+		qChart.draw();
+	}
+
+	function drawq39Table(dt){
+		
+		let tabledt = new google.visualization.DataView(dt);
+		tabledt.setColumns([1,2,3]);
+		qTable.setDataTable(tabledt);
+		qTable.draw();
+		
+		$("#qTable .google-visualization-table-th:first-child").html("Total Price Percent<br>Increase from Self-Marketing");
+		formatTableWidth();
+	}
+	
+	function drawq39Chart(dt){
+		let chartdt = new google.visualization.DataView(dt);
+		chartdt.setColumns([1,3]);
+		
+		qChart.setOption('chartArea',defaultChartArea);
+		qChart.setOption('height',defaultHeight);
+		qChart.setOption('title',"Total Price Percent Increase from Self-Marketing")
+		qChart.setOption('legend.position',"none");
+		qChart.setChartType('ColumnChart');
+		setDomainProperty(qChart,'title',"Response");
+		setRangeProperty(qChart,'title',"Percent of Responses");
+	
+		qChart.setDataTable(chartdt);
+		qChart.draw();
+	}
+
+	function drawq40Table(dt){
+			let stateName = stateFilter.getState().selectedValues[0];
+		
+			let tabledt1 = new google.visualization.DataView(dt);
+			tabledt1.setColumns([1,2,3,4,5,6]);
+			qTable.setDataTable(tabledt1);
+			qTable.draw();
+			
+			$("#qTable .google-visualization-table-th:nth-child(2)").html("Very<br>Unlikely");
+			$("#qTable .google-visualization-table-th:nth-child(3)").html("Neutral");
+			$("#qTable .google-visualization-table-th:nth-child(6)").html("Very<br>Likely");
+			formatTableWidth();
+		}
+		
+		function drawq40Chart(dt){
+			let chartdt = new google.visualization.DataView(dt);
+			chartdt.setColumns([1,2,3,4,5,6]);
+			
+			qChart.setOption('chartArea',{left:190,right:150,bottom:50,top:50})
+			qChart.setOption('height',700);
+			qChart.setOption('title',"Likelihood of increasing direct marketing with following changes ")
+			qChart.setOption('legend.position',"right");
+			qChart.setChartType('BarChart');
+			setDomainProperty(qChart,'title',"");
+			setRangeProperty(qChart,'title',"Percent of Responses");
+		
+			qChart.setDataTable(chartdt);
+			qChart.draw();
+		}
 		
 		function tallyCategories(dt,colIndex,catArray){
 			let valCount = [];
@@ -1444,12 +1583,6 @@ border: 1px solid #d3d3d3;
 			drawChart = drawq12Chart;
 		})
 		
-		$("#question13").click(function(){
-			dash.draw(q13dt);
-			drawTable = drawq13Table
-			drawChart = drawq13Chart;
-		})
-		
 		$("#question14_1").click(function(){
 			dash.draw(q14_1dt);
 			drawTable = drawq14_1Table
@@ -1587,6 +1720,44 @@ border: 1px solid #d3d3d3;
 			drawTable = drawq34Table
 			drawChart = drawq34Chart;
 		})
+
+		$("#question35").click(function(){
+    		dash.draw(q35dt);
+   			drawTable = drawq35Table;
+    		drawChart = drawq35Chart;
+		});
+
+		$("#question36").click(function(){
+			dash.draw(q36dt);
+			drawTable = drawq36Table
+			drawChart = drawq36Chart;
+		})
+
+		$("#question37").click(function(){
+			dash.draw(q37dt);
+			drawTable = drawq37Table
+			drawChart = drawq37Chart;
+		})
+
+		$("#question38").click(function(){
+			dash.draw(q38dt);
+			drawTable = drawq38Table
+			drawChart = drawq38Chart;
+		})
+
+		$("#question39").click(function(){
+			dash.draw(q39dt);
+			drawTable = drawq39Table
+			drawChart = drawq39Chart;
+		})
+
+		$("#question40").click(function(){
+			dash.draw(q40dt);
+			drawTable = drawq40Table
+			drawChart = drawq40Chart;
+		})
+
+		
 		
 		dash.bind(stateFilter,dashTable);
 		dash.draw(q1dt)
@@ -1696,11 +1867,12 @@ border: 1px solid #d3d3d3;
 
 		<div id="dashMenuBox">
 				<div id="accordion">
-					 <h3>Age and Experience</h3>
+					 <h3>Age, Identity, and Experience</h3>
 						  <div>
 							<button id="question1" class="question">What was your age in 2023?</button>
 							<button id="question2" class="question">How many years have you been involved in fishing as a paid crew member, captain and/or vessel owner?</button>
 							<button id="question3" class="question">How much longer do you expect to continue to fish or operate a vessel commercially?</button>
+							<button id="question35" class="question">Identification with Underserved Groups</button>
 						  </div>
 					<h3>Family and Social Connections to Fishing</h3>
 						  <div>
@@ -1728,7 +1900,6 @@ border: 1px solid #d3d3d3;
 						</div>
 					<h3>Challenges to Fishing</h3>
 						<div>
-							<button id="question13" class="question">How important are the following issues, challenges or impediments to making a living as a fisherman?</button>
 							<button id="question15" class="question">Has your fishing operation been affected by fishery closures in the last two years?</button>
 							<button id="question16" class="question">If you answered yes to the question above, how did you respond to the closure?</button>
 							<button id="question14_1" class="question">Please indicate your level of agreement with the statement: “I have adapted my fishing strategies in response to an environmental change.”</button>
@@ -1742,17 +1913,25 @@ border: 1px solid #d3d3d3;
 							<button id="question27a" class="question">Do you keep some of your commercial catch for your own use and/or sharing with family and friends?</button>
 							<button id="question27b" class="question">Roughly how many pounds of catch do you keep each year for personal use?</button>
 						</div>
+					<h3>Self-Marketing of Catch</h3>
+						<div>
+							<button id="question36" class="question">Do you ever self-market your catch or otherwise sell your catch through direct seafood marketing channels?</button>
+							<button id="question37" class="question">The percent of your work time spent self-marketing your catch is?</button>
+							<button id="question38" class="question">The percent of your total revenue from direct marketing channels is?</button>
+							<button id="question39" class="question">The percent increase in the price you receive from selling your catch through direct marketing channels compared to selling to the local processing plant is?</button>	
+							<button id="question40" class="question">How likely are you to increasing Direct Marketing with the following changes?</button>	
+						</div>
 					<h3>Household Characteristics</h3>
 						<div>
 							<button id="question33" class="question">How many people are in your household?</button>
-							<button id="question32" class="question">What was your approximate household income in 2019?</button>
+							<button id="question32" class="question">What was your approximate household income in 2022?</button>
 							<button id="question34" class="question">Do you have health insurance and, if so, how is it acquired?</button>
 						</div>
 					<h3>Income from Fishing</h3>
 						<div>
-							<button id="question28" class="question">In 2019, what percentage of your household income came from commercial fishing?</button>
-							<button id="question29" class="question">In 2019, what percentage of the income you personally contributed to your household was from work other than commercial fishing?</button>
-							<button id="question31" class="question">In 2019, did you personally earn non-fishing income during this quarter?</button>
+							<button id="question28" class="question">In 2022, what percentage of your household income came from commercial fishing?</button>
+							<button id="question29" class="question">In 2022, what percentage of the income you personally contributed to your household was from work other than commercial fishing?</button>
+							<button id="question31" class="question">In 2022, did you personally earn non-fishing income during this quarter?</button>
 							<button id="question24" class="question">What percentage of time do you spend in self-marketing your catch?</button>
 						</div>
 					<h3>Representation in Management</h3>
